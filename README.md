@@ -40,6 +40,7 @@ pip install -r requirements.txt
 brain-mri-tumor-classification/
 ├── data/                      # Datos de entrenamiento
 ├── models/                    # Modelos entrenados
+├── mri_app/                   # app funcional
 ├── notebooks/                 # Jupyter notebooks
 ├── scripts/                   # Scripts de utilidad
 ├── README.md                  # informacion sobre el desarrollo
