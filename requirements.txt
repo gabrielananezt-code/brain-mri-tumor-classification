@@ -1,4 +1,3 @@
-kagglehub
 numpy
 pandas
 opencv-python
@@ -6,3 +5,11 @@ matplotlib
 scikit-learn
 seaborn
 kneed
+
+torch
+torchvision
+fastapi
+uvicorn
+streamlit
+pillow
+python-multipart
