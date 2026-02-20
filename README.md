@@ -1,7 +1,22 @@
-# Sistema de clasificación de tipos de cáncer cerebral mediante redes neuronales
+Sistema de clasificación automática de tumores cerebrales a partir de imágenes MRI, desarrollado como proyecto académico en el curso de Product Development Studio.
 
-Proyecto académico enfocado en el desarrollo de un sistema basado en *Deep Learning* para la **clasificación de tumores cerebrales** a partir de **imágenes MRI**.
+El sistema utiliza EfficientNet-B0 como arquitectura base y permite realizar inferencias tanto a través de:
 
+🌐 Una API REST construida con FastAPI
+
+🖥️ Un Dashboard interactivo desarrollado en Streamlit
+
+🎯 Objetivo del Proyecto
+
+Desarrollar un sistema completo de Deep Learning que permita clasificar imágenes MRI en 4 categorías:
+- glioma
+- meningioma
+- pituitary
+-healthy
+
+Exponer el modelo mediante una API
+Crear una interfaz visual amigable para el usuario
+Documentar y versionar el desarrollo del modelo
 
 ## 📋 Requisitos
 
@@ -38,14 +53,52 @@ pip install -r requirements.txt
 #### 📁 Estructura del Proyecto
 ```bash
 brain-mri-tumor-classification/
-├── data/                      # Datos de entrenamiento
-├── models/                    # Modelos entrenados
-├── mri_app/                   # app funcional
-├── notebooks/                 # Jupyter notebooks
-├── scripts/                   # Scripts de utilidad
-├── README.md                  # informacion sobre el desarrollo
-└── requirements.txt           # Dependencias
+│
+├── api/                    # API REST (FastAPI)
+│   ├── main.py
+│   ├── model_loader.py
+│   └── ...
+│
+├── dashboard/              # Dashboard interactivo (Streamlit)
+│   └── app.py
+│
+├── models/                 # Modelo entrenado y clases
+│   ├── best_model_effi_t.pth
+│   └── classes.json
+│
+├── data/                   # Datos del proyecto
+├── notebooks/              # Exploración y análisis del dataset
+├── README.md
+└── requirements.txt
 ```
+🌐 Ejecutar la API (FastAPI)
+
+Desde la raíz del proyecto:
+```bash
+python -m uvicorn api.main:app --reload
+```
+Acceder a la documentación interactiva:
+```bash
+http://127.0.0.1:8000/docs
+```
+Endpoints principales:
+```bash
+GET / → Estado del servicio
+GET /health → Verificación de funcionamiento
+POST /predict → Predicción de imagen MRI
+```
+
+🖥️ Ejecutar el Dashboard (Streamlit)
+
+Desde la raíz del proyecto:
+```bash
+streamlit run dashboard/app.py
+```
+El dashboard permite:
+- Subir una imagen MRI
+- Visualizar la imagen cargada
+- Obtener la predicción del modelo
+- Ver probabilidades por clase
 
 ## 🤝 Contribución
 
