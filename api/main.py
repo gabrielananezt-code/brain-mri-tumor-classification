@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from PIL import Image
-from model_loader import predict_image_pil
+from api.model_loader import predict_image_pil
 
 app = FastAPI(title="Brain MRI Tumor Classifier API")
 

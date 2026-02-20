@@ -1,10 +1,12 @@
 from pathlib import Path
 import torch
 
-BASE_DIR = Path(__file__).resolve().parent
-MODEL_PATH = BASE_DIR.parent.parent / "models" / "best_model_effi_t.pth"
+BASE_DIR = Path(__file__).resolve().parent      # .../brain-mri-tumor-classification/api
+REPO_ROOT = BASE_DIR.parent                     # .../brain-mri-tumor-classification
+MODEL_PATH = REPO_ROOT / "models" / "best_model_effi_t.pth"
 
 print("BASE_DIR:", BASE_DIR)
+print("REPO_ROOT:", REPO_ROOT)
 print("MODEL_PATH:", MODEL_PATH)
 print("EXISTS?:", MODEL_PATH.exists())
 
