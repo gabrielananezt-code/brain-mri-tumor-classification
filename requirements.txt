@@ -1,3 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+streamlit
+requests
+pillow
+torch
+torchvision
+torchaudio
 kagglehub
 numpy
 pandas
