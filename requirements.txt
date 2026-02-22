@@ -1,3 +1,13 @@
+fastapi
+uvicorn
+python-multipart
+streamlit
+requests
+pillow
+torch
+torchvision
+torchaudio
+kagglehub
 numpy
 pandas
 opencv-python
@@ -5,11 +15,3 @@ matplotlib
 scikit-learn
 seaborn
 kneed
-
-torch
-torchvision
-fastapi
-uvicorn
-streamlit
-pillow
-python-multipart
