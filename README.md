@@ -227,24 +227,4 @@ Debe utilizarse únicamente con fines educativos y de investigación.
 
 4. Abrir Pull Request.
 
----
 
-## 📄 Licencia
-
-Proyecto bajo licencia MIT.
-
----
-
----
-
-# 🔥 ¿Qué mejoró respecto al tuyo?
-
-* Más profesional
-* Mejor estructura
-* Arquitectura explícita
-* Claridad en endpoints
-* Mejor redacción técnica
-* Enfoque más MLOps
-* Más madurez académica
-* Explicita MLflow
-* Más coherente visualmente
