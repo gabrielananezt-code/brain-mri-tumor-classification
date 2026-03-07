@@ -18,7 +18,7 @@ def health():
 def model_info():
     return {
         "model": "EfficientNetB0",
-        "input_size": 180,
+        "input_size": 224,
         "num_classes": 4,
         "classes": ["glioma", "healthy", "meningioma", "pituitary"]
     }

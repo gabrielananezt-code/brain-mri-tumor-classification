@@ -31,12 +31,14 @@ model.load_state_dict(state_dict)
 model.eval()
 torch.set_grad_enabled(False)
 
-IMG_SIZE = 180
+IMG_SIZE = 224
 transform = transforms.Compose([
     transforms.Resize((IMG_SIZE, IMG_SIZE)),
     transforms.Lambda(lambda im: im.convert("RGB")),
     transforms.ToTensor(),
-    transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),
+    transforms.Normalize(
+    mean=[0.485, 0.456, 0.406],
+    std=[0.229, 0.224, 0.225]),
 ])
 
 def predict_image_pil(img: Image.Image):
