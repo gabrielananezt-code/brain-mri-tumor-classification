@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements-api.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements-api.txt
+    pip install --no-cache-dir -r requirements-api.txt && \
+    pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
 
 COPY api ./api
 COPY models ./models

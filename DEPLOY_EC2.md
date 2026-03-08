@@ -62,3 +62,42 @@ docker compose restart
 docker compose down
 docker compose up -d --build
 ```
+
+## 6. Despliegue con ECR (opcional recomendado)
+
+Si quieres separar build y runtime, publica imagenes en ECR y en EC2 usa `image:` en lugar de `build:`.
+
+Flujo:
+
+1. Crear repositorios ECR (`api` y `dashboard`)
+2. `docker build -f Dockerfile.api -t <ECR_API_URI>:v1 .`
+3. `docker build -f Dockerfile.dashboard -t <ECR_DASH_URI>:v1 .`
+4. `docker push ...`
+5. En EC2: `docker login` a ECR y `docker compose pull && docker compose up -d`
+
+## 7. Recomendaciones de produccion
+
+- Volumen EBS minimo `20 GB` (mejor `30 GB`) para builds con ML.
+- Colocar Nginx/ALB delante del dashboard.
+- Restringir acceso de red al puerto 8501.
+- Anadir HTTPS (ACM + ALB o Nginx + certbot).
+- Fijar versiones en `requirements-api.txt` y `requirements-dashboard.txt`.
+
+## 8. Troubleshooting: no space left on device
+
+Si falla el build con `no space left on device`:
+
+```bash
+df -h
+docker system df
+docker compose down --remove-orphans
+docker builder prune -af
+docker system prune -af --volumes
+```
+
+Luego reconstruye sin cache:
+
+```bash
+docker compose build --no-cache api
+docker compose up -d
+```
