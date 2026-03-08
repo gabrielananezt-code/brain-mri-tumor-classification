@@ -1,0 +1,22 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: brain-mri-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.dashboard
+    container_name: brain-mri-dashboard
+    restart: unless-stopped
+    environment:
+      API_URL: http://api:8000/predict
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"

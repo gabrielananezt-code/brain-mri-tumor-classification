@@ -227,4 +227,30 @@ Debe utilizarse únicamente con fines educativos y de investigación.
 
 4. Abrir Pull Request.
 
+---
+
+## Docker (API + Dashboard)
+
+Se incluyeron archivos para ejecutar el sistema en contenedores:
+
+- `Dockerfile.api`
+- `Dockerfile.dashboard`
+- `docker-compose.yml`
+
+Ejecutar local:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+Endpoints:
+
+- API docs: `http://localhost:8000/docs`
+- Dashboard: `http://localhost:8501`
+
+Guia completa de despliegue en EC2:
+
+- `DEPLOY_EC2.md`
+
 
