@@ -5,85 +5,86 @@
 
 ## 1. Introducción
 
-Este documento describe el proceso para instalar y ejecutar el sistema de clasificación de tumores cerebrales basado en imágenes MRI.
+Este documento describe el proceso para **instalar y ejecutar** el sistema de clasificación de tumores cerebrales basado en imágenes MRI.
 
-El sistema está compuesto por:
+La solución está compuesta por los siguientes componentes:
 
-- una **API REST desarrollada en FastAPI**
-- un **modelo de Deep Learning en PyTorch**
-- un **dashboard interactivo en Streamlit**
-- un **contenedor Docker** para facilitar el despliegue
+- Una **API REST desarrollada en FastAPI** que realiza la inferencia del modelo.
+- Un **dashboard interactivo en Streamlit** para que el usuario cargue imágenes.
+- Un **modelo de Deep Learning entrenado en PyTorch** almacenado en formato `.pth`.
+- Un sistema de **contenedores Docker** que permite ejecutar todos los servicios de manera reproducible.
 
-El sistema puede ejecutarse:
+La arquitectura del sistema utiliza **dos contenedores Docker**:
 
-- localmente con Python  
-- mediante contenedores Docker  
+- **API FastAPI**
+- **Dashboard Streamlit**
+
+Ambos servicios se coordinan mediante **Docker Compose**.
 
 ---
 
 ## 2. Requisitos del sistema
 
-Antes de iniciar la instalación asegúrese de tener instalado:
+Antes de ejecutar el sistema asegúrese de tener instalado:
 
 ### Software requerido
 
-- Python 3.10 o superior  
-- pip  
-- Git  
 - Docker  
-- Docker Compose (opcional)  
+- Docker Compose Plugin  
+- Git  
 
-### Requisitos de hardware recomendados
+### Verificar instalación de Docker
 
-- 4 GB de RAM o más  
-- 2 GB de espacio libre en disco  
+Ejecutar en la terminal:
+```bash
+docker --version
+```
+### Verificar Docker Compose
 
+Ejecutar en la terminal:
+```bash
+docker compose version
+```
 ---
 
 ## 3. Clonar el repositorio
 
-Clone el repositorio del proyecto desde GitHub:
-
+Clone el repositorio del proyecto desde GitHub ejecutando:
 ```bash
 git clone https://github.com/gabrielananezt-code/brain-mri-tumor-classification.git
-
+```
+Luego ingrese a la carpeta del proyecto:
+```bash
 cd brain-mri-tumor-classification
 ```
-
 ---
 
-## 4. Instalación local con Python
+## 4. Instalación local con Python (opcional)
 
-Esta sección permite ejecutar el sistema sin Docker.
+Esta sección permite ejecutar el sistema **sin Docker**.
 
 ### 4.1 Crear entorno virtual
 
 Se recomienda crear un entorno virtual para aislar las dependencias.
 
 #### Windows
-
 ```bash
-python -m venv venv
+python -m venv venv  
 venv\Scripts\activate
 ```
-
 #### Linux / Mac
-
 ```bash
-python -m venv venv
+python -m venv venv  
 source venv/bin/activate
 ```
-
 ---
 
 ### 4.2 Instalar dependencias
 
-Instale las librerías necesarias:
-
+Instale las librerías necesarias ejecutando:
 ```bash
 pip install -r requirements.txt
 ```
-
 Las principales dependencias incluyen:
 
 - torch  
@@ -98,14 +99,14 @@ Las principales dependencias incluyen:
 
 ## 5. Verificar artefactos del modelo
 
-Antes de ejecutar el sistema, confirme que en la carpeta `models` existan los archivos del modelo:
+Antes de ejecutar el sistema, confirme que en la carpeta **models** existan los archivos del modelo.
 
+Estructura esperada:
 ```bash
-models/
-├── best_model_effi_t.pth
-└── classes.json
+models/  
+├── best_model_effi_t.pth  
+└── classes.json  
 ```
-
 Estos archivos contienen:
 
 - los pesos entrenados del modelo  
@@ -113,41 +114,31 @@ Estos archivos contienen:
 
 ---
 
-## 6. Ejecutar la API
+## 6. Ejecutar la API (modo local)
 
 Desde la raíz del proyecto ejecute:
-
 ```bash
 python -m uvicorn api.main:app --reload
 ```
-
 La API quedará disponible en:
-
 ```bash
 http://localhost:8000
 ```
-
 La documentación automática estará disponible en:
-
 ```bash
 http://localhost:8000/docs
 ```
-
 ---
 
-## 7. Ejecutar el dashboard
+## 7. Ejecutar el dashboard (modo local)
 
 Abra una nueva terminal y ejecute:
-
 ```bash
 python -m streamlit run dashboard/app.py
 ```
-
 El dashboard quedará disponible en:
-
 ```bash
 http://localhost:8501
-
 ```
 ---
 
@@ -172,102 +163,126 @@ Para confirmar que el sistema funciona correctamente:
 ## 9. Estructura del proyecto
 
 La estructura principal del repositorio es la siguiente:
-
 ```bash
-brain-mri-tumor-classification
-│
-├── api
-│ ├── main.py
-│ └── model_loader.py
-│
-├── dashboard
-│ └── app.py
-│
-├── models
-│ ├── best_model_effi_t.pth
-│ └── classes.json
-│
-├── notebooks
-├── scripts
-├── data
-├── manuales
-│ ├── manual-de-usuario.md
-│ └── manual-de-instalacion.md
-│
-├── requirements.txt
-└── README.md
+brain-mri-tumor-classification  
+│  
+├── api  
+│ ├── main.py  
+│ └── model_loader.py  
+│  
+├── dashboard  
+│ └── app.py  
+│  
+├── models  
+│ ├── best_model_effi_t.pth  
+│ └── classes.json  
+│  
+├── notebooks  
+├── scripts  
+├── data  
+├── manuales  
+│ ├── manual-de-usuario.md  
+│ └── manual-de-instalacion.md  
+│  
+├── docker-compose.yml  
+├── Dockerfile.api  
+├── Dockerfile.dashboard  
+│  
+├── requirements.txt  
+└── README.md  
 ```
-
 ---
 
 ## 10. Instalación mediante Docker
 
-El proyecto incluye un **Dockerfile** que permite ejecutar la API y el modelo dentro de un contenedor.
+El proyecto incluye dos contenedores Docker:
 
-### 10.1 Construir la imagen Docker
+- uno para la **API**
+- uno para el **dashboard**
+
+Estos contenedores se ejecutan mediante **Docker Compose**.
+
+### 10.1 Construir los contenedores
 
 Desde la raíz del proyecto ejecute:
-
 ```bash
-docker build -t brain-mri-classifier .
+docker compose build
 ```
-
 ---
 
-### 10.2 Ejecutar el contenedor
+### 10.2 Ejecutar los contenedores
 
-Ejecute el contenedor con:
-
+Ejecute:
 ```bash
-docker run -p PUERTO_HOST:PUERTO_CONTENEDOR brain-mri-classifier
+docker compose up -d
 ```
+Esto iniciará automáticamente:
 
-Ejemplo:
-
-```bash
-docker run -p 8000:8000 brain-mri-classifier
-```
+- el contenedor de la **API**
+- el contenedor del **dashboard**
 
 ---
 
 ## 11. Acceso al sistema con Docker
 
-Una vez ejecutado el contenedor:
+Una vez ejecutados los contenedores, los servicios estarán disponibles en:
 
+### Dashboard
+```bash
+http://localhost:8501
+```
 ### API
-
 ```bash
 http://localhost:8000
 ```
-
-### Documentación de la API
-
+### Documentación interactiva de la API
 ```bash
 http://localhost:8000/docs
 ```
-
-Si el dashboard se ejecuta en un contenedor independiente, el puerto deberá definirse en el archivo de configuración correspondiente.
-
 ---
 
-## 12. Configuración pendiente de Docker
+## 12. Configuración de Docker
 
-Cuando el Dockerfile definitivo esté disponible se deberán confirmar los siguientes parámetros:
+La configuración actual del sistema define los siguientes servicios.
+
+### Contenedor API
+
+- Base de imagen: `python:3.10-slim`
+- Puerto expuesto: **8000**
+- Comando de ejecución:
 ```bash
-Nombre de la imagen Docker:  
-[POR DEFINIR]
+uvicorn api.main:app --host 0.0.0.0 --port 8000
+```
+El modelo es copiado dentro del contenedor en la ruta:
+```bash
+/app/models
+```
+---
 
-Puerto de la API:  
-[POR DEFINIR]
+### Contenedor Dashboard
 
-Puerto del dashboard:  
-[POR DEFINIR]
+- Base de imagen: `python:3.10-slim`
+- Puerto expuesto: **8501**
+- Comando de ejecución:
+```bash
+streamlit run dashboard/app.py --server.address=0.0.0.0 --server.port=8501
+```
+---
 
-Comando de ejecución del contenedor:  
-[POR DEFINIR]
+### Comunicación entre servicios
 
-Ubicación interna del modelo:  
-[POR DEFINIR]
+El dashboard envía las imágenes a la API mediante la URL interna:
+```bash
+http://api:8000/predict
+```
+---
+
+### Comando principal de ejecución
+
+El sistema completo se ejecuta con:
+```bash
+docker compose build  
+docker compose up -d
 ```
 ---
 
@@ -280,11 +295,9 @@ Verifique que los archivos `.pth` y `classes.json` estén presentes en la carpet
 ### Error de dependencias
 
 Ejecute nuevamente:
-
 ```bash
 pip install -r requirements.txt
 ```
-
 ### El dashboard no se conecta a la API
 
 Verifique:
@@ -297,5 +310,8 @@ Verifique:
 Confirme que:
 
 - Docker esté instalado  
-- el `Dockerfile` se encuentre en la raíz del proyecto  
+- el archivo `docker-compose.yml` esté en la raíz del proyecto  
 - el puerto utilizado no esté ocupado  
+
+
+
